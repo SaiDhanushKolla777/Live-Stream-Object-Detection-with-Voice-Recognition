@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Stream Object Detection with Voice Recognition</title>
+</head>
+<body>
+    <h1>Object Detection Live Stream</h1>
+    <img src="{{ url_for('video_feed') }}" id="video">
+
+    <h2>Recognized Speech:</h2>
+    <div id="speechText">...</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Your browser does not support the Web Speech API");
+            } else {
+                var recognition = new webkitSpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+
+                recognition.start();
+
+                recognition.onresult = function(event) {
+                    var interim_transcript = '';
+                    var final_transcript = '';
+
+                    for (var i = event.resultIndex; i < event.results.length; ++i) {
+                        if (event.results[i].isFinal) {
+                            final_transcript += event.results[i][0].transcript;
+                        } else {
+                            interim_transcript += event.results[i][0].transcript;
+                        }
+                    }
+
+                    // Update the speechText element with the recognized text
+                    document.getElementById('speechText').innerText = final_transcript + interim_transcript;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
