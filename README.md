@@ -18,6 +18,3 @@ A Flask-based web application that provides real-time object detection using YOL
 - HTML5
 - JavaScript
 
-### Usage
-Ideal for applications requiring real-time object detection in video streams, supplemented with voice recognition for enhanced interaction.
-
